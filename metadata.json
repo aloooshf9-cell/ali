@@ -1,0 +1,6 @@
+{
+  "name": "Enterprise Multi-Company Management System",
+  "description": "A scalable multi-company operations, tasks, reports, and granular role-based access control (RBAC) management system with bilingual Arabic/English support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

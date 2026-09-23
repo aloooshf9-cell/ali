@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: enterprise-system-app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - JWT_SECRET=${JWT_SECRET:-change-this-to-a-very-strong-secret-key-32-chars}
+      - DATABASE_URL=${DATABASE_URL:-}
+    volumes:
+      - ./logs:/app/logs
+      - ./backups:/app/backups
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # Optional PostgreSQL database service (can be activated if using Cloud SQL or local Postgres)
+  # postgres:
+  #   image: postgres:16-alpine
+  #   container_name: enterprise-system-db
+  #   restart: always
+  #   environment:
+  #     POSTGRES_DB: enterprise_db
+  #     POSTGRES_USER: enterprise_user
+  #     POSTGRES_PASSWORD: enterprise_secure_password_here
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+  #   ports:
+  #     - "127.0.0.1:5432:5432" # Bound only to localhost for security
+
+# volumes:
+#   pgdata:
